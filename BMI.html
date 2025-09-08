@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI Calculator (Feet & Inches)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>BMI Calculator</h2>
+
+    <label for="weight">Weight (kg):</label><br>
+    <input type="number" id="weight" placeholder="Enter your weight"><br>
+
+    <label for="feet">Height:</label><br>
+    <input type="number" id="feet" placeholder="Feet"> 
+    <input type="number" id="inches" placeholder="Inches"><br>
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const feet = parseFloat(document.getElementById('feet').value);
+            const inches = parseFloat(document.getElementById('inches').value);
+            const result = document.getElementById('result');
+
+            if (isNaN(weight) || isNaN(feet) || isNaN(inches) || weight <= 0 || feet < 0 || inches < 0) {
+                result.innerHTML = "❗ Please enter valid weight and height values.";
+                return;
+            }
+
+            const totalInches = (feet * 12) + inches;
+            const heightInMeters = totalInches * 0.0254;
+
+            const bmi = weight / (heightInMeters * heightInMeters);
+            let status = "";
+
+            if (bmi < 18) {
+                status = "Underweight";
+            } else if (bmi >= 18 && bmi < 25) {
+                status = "Normal";
+            } else if (bmi >= 25 && bmi < 30) {
+                status = "Overweight";
+            } else {
+                status = "Obese";
+            }
+
+            result.innerHTML = `✅ Your BMI is <strong>${bmi.toFixed(2)}</strong><br>Status: <strong>${status}</strong>`;
+        }
+    </script>
+
+</body>
+</html>
